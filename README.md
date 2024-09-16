@@ -61,9 +61,9 @@ $ npm run start:prod
 ```bash
 # unit tests
 $ npm run test
+$ npm test -- --coverage --testPathPattern=aerolinea.service.spec.ts
+$ npm test -- --coverage --testPathPattern=aeropuerto.service.spec.ts
 
-# e2e tests
-$ npm run test:e2e
 
 # test coverage
 $ npm run test:cov
