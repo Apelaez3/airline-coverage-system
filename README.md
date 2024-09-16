@@ -28,6 +28,17 @@
 
 ## Project setup
 
+## Pasos para correr el proyecto localmente
+1. Clonar proyecto
+2. ``` npm install ```
+3. Clonar archivo ``` env.template ``` Y renombrarlo a ``` .env  ```
+4. Cambiar las variables de entorno
+5. Levantar la base de datos
+```
+  docker-compose up -d
+```
+6. Levantar la aplicación localmente: ``` npm run start:dev ```
+
 ```bash
 $ npm install
 ```
