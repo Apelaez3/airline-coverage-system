@@ -1,9 +1,10 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Put, Param, Delete } from '@nestjs/common';
 import { AeropuertoService } from './aeropuerto.service';
 import { CreateAeropuertoDto } from './dto/create-aeropuerto.dto';
 import { UpdateAeropuertoDto } from './dto/update-aeropuerto.dto';
 
-@Controller('aeropuerto')
+
+@Controller('airports')
 export class AeropuertoController {
   constructor(private readonly aeropuertoService: AeropuertoService) {}
 
@@ -19,16 +20,16 @@ export class AeropuertoController {
 
   @Get(':id')
   findOne(@Param('id') id: string) {
-    return this.aeropuertoService.findOne(+id);
+    return this.aeropuertoService.findOne(id);
   }
 
-  @Patch(':id')
+  @Put(':id')
   update(@Param('id') id: string, @Body() updateAeropuertoDto: UpdateAeropuertoDto) {
-    return this.aeropuertoService.update(+id, updateAeropuertoDto);
+    return this.aeropuertoService.update(id, updateAeropuertoDto);
   }
 
   @Delete(':id')
   remove(@Param('id') id: string) {
-    return this.aeropuertoService.remove(+id);
+    return this.aeropuertoService.remove(id);
   }
 }
