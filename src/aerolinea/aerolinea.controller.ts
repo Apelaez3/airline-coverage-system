@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, Put } from '@nestjs/common';
 import { AerolineaService } from './aerolinea.service';
 import { CreateAerolineaDto } from './dto/create-aerolinea.dto';
 import { UpdateAerolineaDto } from './dto/update-aerolinea.dto';
@@ -19,16 +19,16 @@ export class AerolineaController {
 
   @Get(':id')
   findOne(@Param('id') id: string) {
-    return this.aerolineaService.findOne(+id);
+    return this.aerolineaService.findOne(id);
   }
 
-  @Patch(':id')
+  @Put(':id')
   update(@Param('id') id: string, @Body() updateAerolineaDto: UpdateAerolineaDto) {
-    return this.aerolineaService.update(+id, updateAerolineaDto);
+    return this.aerolineaService.update(id, updateAerolineaDto);
   }
 
   @Delete(':id')
   remove(@Param('id') id: string) {
-    return this.aerolineaService.remove(+id);
+    return this.aerolineaService.remove(id);
   }
 }
