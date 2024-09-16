@@ -1,0 +1,711 @@
+{
+	"info": {
+		"_postman_id": "20e3fdab-f84d-4d7f-9fcd-e7ed08a333a5",
+		"name": "Aerolineas y Aeropuertos",
+		"description": "Colección para probar las Aerolíneas, Aeropuertos y su relación.",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "26687890",
+		"_collection_link": "https://www.postman.com/sw-nube-uniandes/workspace/api-test/collection/26687890-20e3fdab-f84d-4d7f-9fcd-e7ed08a333a5?action=share&source=collection_link&creator=26687890"
+	},
+	"item": [
+		{
+			"name": "Aerolíneas",
+			"item": [
+				{
+					"name": "Crear una aerolínea válida",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// Parsear la respuesta del cuerpo (asumiendo que es JSON)",
+									"var responseData = pm.response.json();",
+									"",
+									"// Guardar el 'id' como variable de entorno",
+									"pm.environment.set(\"id_aerolinea\", responseData.id);",
+									"",
+									"",
+									"pm.collectionVariables.set(\"id_aerolinea\", responseData.id);",
+									"",
+									"console.log(\"Aerolinea ID guardado como variable de entorno: \" + pm.environment.get(\"id_aerolinea\"));",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"nombre\": \"AeroTest\",\n  \"descripcion\": \"Una aerolínea de prueba\",\n  \"fechaDeFundacion\": \"2000-01-01\",\n  \"paginaWeb\": \"https://www.aerotest.com\"\n}\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/airlines",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"airlines"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Crear una aerolínea inválida",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"nombre\": \"AeroTest\",\n  \"descripcion\": \"Una aerolínea de prueba\",\n  \"fechaDeFundacion\": \"2025-01-01\",\n  \"paginaWeb\": \"https://www.aerotest.com\"\n}\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/airlines",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"airlines"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Obtener todas las aerolíneas",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/airlines",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"airlines"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Obtener una aerolínea por ID que no existe",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/airlines/{{id_aerolinea_fail}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"airlines",
+								"{{id_aerolinea_fail}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Obtener aerolinea por ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/airlines/{{id_aerolinea}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"airlines",
+								"{{id_aerolinea}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Actualizar una aerolínea",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"nombre\": \"Aerolinea actualizada\",\n  \"descripcion\": \"Una aerolínea de prueba\",\n  \"fechaDeFundacion\": \"2000-01-01\",\n  \"paginaWeb\": \"https://www.aerotest.com\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/airlines/{{id_aerolinea}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"airlines",
+								"{{id_aerolinea}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Actualizar aerolinea con un id que no existe",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/airlines/{{id_aerolinea_fail}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"airlines",
+								"{{id_aerolinea_fail}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Eliminar una aerolínea por su ID",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/airlines/{{id_aerolinea}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"airlines",
+								"{{id_aerolinea}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Eliminar aerolinea con un ID que no existe",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/airlines/{{id_aerolinea_fail}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"airlines",
+								"{{id_aerolinea_fail}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Aeropuertos",
+			"item": [
+				{
+					"name": "Crear un aeropuerto válido",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// Parsear la respuesta del cuerpo (asumiendo que es JSON)",
+									"var responseData = pm.response.json();",
+									"",
+									"// Guardar el 'id' como variable de entorno",
+									"pm.environment.set(\"id_aeropuerto\", responseData.id);",
+									"",
+									"",
+									"pm.collectionVariables.set(\"id_aeropuerto\", responseData.id);",
+									"",
+									"console.log(\"Aeropuerto ID guardado como variable de entorno: \" + pm.environment.get(\"id_aeropuerto\"));"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"nombre\": \"Aeropuerto Test\",\n    \"codigo\": \"AT3\",\n    \"pais\": \"País Test\",\n    \"ciudad\": \"Ciudad Test\"\n}\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/airports",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"airports"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Crear un aeropuerto invalido",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"nombre\": \"Aeropuerto Test\",\n    \"codigo\": \"ATA3\",\n    \"pais\": \"País Test\",\n    \"ciudad\": \"Ciudad Test\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/airports",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"airports"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Obtener todos los aeropuertos",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/airports",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"airports"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Obtener aeropuerto por ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/airports/{{id_aeropuerto}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"airports",
+								"{{id_aeropuerto}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Obtener aeropuerto por ID invalido",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/airports/49dd8991-a6a7-4d29-87f6-f9d11f5ce880",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"airports",
+								"49dd8991-a6a7-4d29-87f6-f9d11f5ce880"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Eliminar un aeropuerto por su ID",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/airports/{{id_aeropuerto}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"airports",
+								"{{id_aeropuerto}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Eliminar aeropuerto con id invalido",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/airports/49dd8991-a6a7-4d29-87f6-f9d11f5ce880",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"airports",
+								"49dd8991-a6a7-4d29-87f6-f9d11f5ce880"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Actualizar aeropuerto",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"nombre\": \"Aeropuerto actualizado\",\n    \"codigo\": \"AT3\",\n    \"pais\": \"País Test\",\n    \"ciudad\": \"Ciudad Test\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/airports/{{id_aeropuerto}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"airports",
+								"{{id_aeropuerto}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Actualizar aeropuerto con id que no existe",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"nombre\": \"Aeropuerto actualizado\",\n    \"codigo\": \"AT3\",\n    \"pais\": \"País Test\",\n    \"ciudad\": \"Ciudad Test\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/airports/49dd8991-a6a7-4d29-87f6-f9d11f5ce880",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"airports",
+								"49dd8991-a6a7-4d29-87f6-f9d11f5ce880"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Aerolíneas-Aeropuertos",
+			"item": [
+				{
+					"name": "Asociar un aeropuerto a una aerolínea",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"aeropuertosIds\": [\"{{id_aeropuerto}}\"]}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/airlines/{{id_aerolinea}}/airports",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"airlines",
+								"{{id_aerolinea}}",
+								"airports"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Asociar aeropuerto que no existe a una aerolinea",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"aeropuertosIds\": [\"49dd8991-a6a7-4d29-87f6-f9d11f5ce880\"]}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/airlines/{{id_aerolinea}}/airports",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"airlines",
+								"{{id_aerolinea}}",
+								"airports"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Obtener todos los aeropuertos asociados a una aerolínea",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/airlines/{{id_aerolinea}}/airports",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"airlines",
+								"{{id_aerolinea}}",
+								"airports"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Obtener un aeropuerto asociado a una aerolinea",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/airlines/{{id_aerolinea}}/airports/{{id_aeropuerto}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"airlines",
+								"{{id_aerolinea}}",
+								"airports",
+								"{{id_aeropuerto}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Obtener un aeropuerto que no este asociado a una aerolinea",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/airlines/{{id_aerolinea}}/airports/49dd8991-a6a7-4d29-87f6-f9d11f5ce880",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"airlines",
+								"{{id_aerolinea}}",
+								"airports",
+								"49dd8991-a6a7-4d29-87f6-f9d11f5ce880"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Eliminar un aeropuerto de una aerolínea",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/airlines/{{id_aerolinea}}/airports/{{id_aeropuerto}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"airlines",
+								"{{id_aerolinea}}",
+								"airports",
+								"{{id_aeropuerto}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Eliminar aeropueto que no estaba asociado",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/airlines/{{id_aerolinea}}/airports/49dd8991-a6a7-4d29-87f6-f9d11f5ce880",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"airlines",
+								"{{id_aerolinea}}",
+								"airports",
+								"49dd8991-a6a7-4d29-87f6-f9d11f5ce880"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Actualizar aeropuertos asociados a una aerolinea",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"aeropuertosIds\": [\"{{id_aeropuerto}}\"]}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/airlines/{{id_aerolinea}}/airports/{{id_aeropuerto}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"airlines",
+								"{{id_aerolinea}}",
+								"airports",
+								"{{id_aeropuerto}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Actualizar aeropuertos asociados a una aerolinea con un aeropuero inexistente",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"aeropuertosIds\": [\"49dd8991-a6a7-4d29-87f6-f9d11f5ce880\"]}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/airlines/{{id_aerolinea}}/airports/{{id_aeropuerto}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"airlines",
+								"{{id_aerolinea}}",
+								"airports",
+								"{{id_aeropuerto}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "base_url",
+			"value": "http://localhost:3000/api/v1",
+			"type": "string"
+		},
+		{
+			"key": "id_aerolinea_fail",
+			"value": "ed12506c-5383-4afe-a066-e0cb974e7ee7",
+			"type": "string"
+		},
+		{
+			"key": "id_aerolinea",
+			"value": ""
+		},
+		{
+			"key": "id_aeropuerto",
+			"value": ""
+		},
+		{
+			"key": "id_aeropuerto_fail",
+			"value": "05f520f3-3f0d-492c-a81d-84855dh77947",
+			"type": "string"
+		}
+	]
+}
