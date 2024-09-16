@@ -48,6 +48,7 @@ describe('AerolineaService', () => {
     findOne: jest.fn().mockResolvedValue(mockAeropuerto),
     preload: jest.fn().mockResolvedValue(mockAeropuerto),
     remove: jest.fn().mockResolvedValue(mockAeropuerto),
+    findBy: jest.fn().mockResolvedValue([mockAeropuerto]),
   };
 
   beforeEach(async () => {
@@ -152,6 +153,88 @@ describe('AerolineaService', () => {
       jest.spyOn(repository, 'remove').mockRejectedValue(new Error('Removal failed')); // Mock remove to reject
   
       await expect(service.remove('1')).rejects.toThrow(BusinessLogicException); // Expect BusinessLogicException
+    });
+  });
+
+  describe('findAirportsFromAirline', () => {
+    it('should return the list of airports from an airline', async () => {
+      const aerolineaWithAirports = { ...mockAerolinea, aeropuertos: [mockAeropuerto] };
+      jest.spyOn(repository, 'findOne').mockResolvedValue(aerolineaWithAirports as any);
+
+      expect(await service.findAirportsFromAirline('1')).toEqual([mockAeropuerto]);
+    });
+
+    it('should throw an error if aerolinea is not found', async () => {
+      jest.spyOn(repository, 'findOne').mockResolvedValue(null);
+
+      await expect(service.findAirportsFromAirline('1')).rejects.toThrow(BusinessLogicException);
+    });
+  });
+
+  describe('findAirportFromAirline', () => {
+    it('should return a specific airport from an airline', async () => {
+      const aerolineaWithAirports = { ...mockAerolinea, aeropuertos: [mockAeropuerto] };
+      jest.spyOn(repository, 'findOne').mockResolvedValue(aerolineaWithAirports as any);
+
+      expect(await service.findAirportFromAirline('1', '1')).toEqual(mockAeropuerto);
+    });
+
+    it('should throw an error if airport is not found in the airline', async () => {
+      const aerolineaWithNoAirports = { ...mockAerolinea, aeropuertos: [] };
+      jest.spyOn(repository, 'findOne').mockResolvedValue(aerolineaWithNoAirports as any);
+
+      await expect(service.findAirportFromAirline('1', '1')).rejects.toThrow(BusinessLogicException);
+    });
+
+    it('should throw an error if aerolinea is not found', async () => {
+      jest.spyOn(repository, 'findOne').mockResolvedValue(null);
+
+      await expect(service.findAirportFromAirline('1', '1')).rejects.toThrow(BusinessLogicException);
+    });
+  });
+
+  describe('updateAirportsFromAirline', () => {
+    it('should update the airports for an airline', async () => {
+      const updatedAeropuertos: Aeropuerto[] = [mockAeropuerto];
+      const aerolineaWithAirports = { ...mockAerolinea, aeropuertos: updatedAeropuertos };
+      jest.spyOn(repository, 'findOne').mockResolvedValue(mockAerolinea as any);
+      jest.spyOn(aeropuertoRepository, 'find').mockResolvedValue(updatedAeropuertos as any); // Changed from 'findBy' to 'find'
+      jest.spyOn(repository, 'save').mockResolvedValue(aerolineaWithAirports as any);
+  
+      expect(await service.updateAirportsFromAirline('1', ['1'])).toEqual(aerolineaWithAirports);
+    });
+  
+    
+  
+    it('should throw an error if aerolinea is not found', async () => {
+      jest.spyOn(repository, 'findOne').mockResolvedValue(null);
+      jest.spyOn(aeropuertoRepository, 'find').mockResolvedValue([mockAeropuerto]);
+  
+      await expect(service.updateAirportsFromAirline('1', ['1'])).rejects.toThrow(BusinessLogicException);
+    });
+  });
+
+  describe('deleteAirportFromAirline', () => {
+    it('should remove an airport from an airline', async () => {
+      const aerolineaWithAirports = { ...mockAerolinea, aeropuertos: [mockAeropuerto] };
+      const aerolineaWithNoAirports = { ...mockAerolinea, aeropuertos: [] };
+      jest.spyOn(repository, 'findOne').mockResolvedValue(aerolineaWithAirports as any);
+      jest.spyOn(repository, 'save').mockResolvedValue(aerolineaWithNoAirports as any);
+
+      expect(await service.deleteAirportFromAirline('1', '1')).toEqual(aerolineaWithNoAirports);
+    });
+
+    it('should throw an error if airport is not found in the airline', async () => {
+      const aerolineaWithAirports = { ...mockAerolinea, aeropuertos: [] };
+      jest.spyOn(repository, 'findOne').mockResolvedValue(aerolineaWithAirports as any);
+
+      await expect(service.deleteAirportFromAirline('1', '1')).rejects.toThrow(BusinessLogicException);
+    });
+
+    it('should throw an error if aerolinea is not found', async () => {
+      jest.spyOn(repository, 'findOne').mockResolvedValue(null);
+
+      await expect(service.deleteAirportFromAirline('1', '1')).rejects.toThrow(BusinessLogicException);
     });
   });
 });
