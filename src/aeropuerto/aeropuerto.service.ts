@@ -38,7 +38,7 @@ constructor(
   }
 
   async findOne(id: string) {
-    const aeropuerto = this.aeropuertoRepository.findOne(
+    const aeropuerto = await this.aeropuertoRepository.findOne(
       { where: { id: id } }
     );
     if (!aeropuerto) {

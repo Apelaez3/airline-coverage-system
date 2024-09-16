@@ -19,7 +19,7 @@ describe('AeropuertoService', () => {
     codigo: 'AT1',
     pais: 'País Test',
     ciudad: 'Ciudad Test',
-    aerolineas: [], // Asegúrate de incluir todas las propiedades requeridas
+    aerolineas: [],
   };
 
   const mockAeropuertoRepository = {
